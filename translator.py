@@ -1,6 +1,7 @@
 from parser import Parser
 from codeWriter import CodeWriter
 
+
 class Translate:
 
     def __init__(self, parser, codeWriter):
@@ -12,31 +13,33 @@ class Translate:
             _type = self.parser.commandType()
 
             if (_type == "Push"):
-                self.codeWriter.writePush(self.parser.getArg1(), self.parser.getArg2())
+                self.codeWriter.writePush(
+                    self.parser.getArg1(), self.parser.getArg2())
                 self.parser.advance()
             elif (_type == "Pop"):
-                self.codeWriter.writePop(self.parser.getArg1(), self.parser.getArg2())
+                self.codeWriter.writePop(
+                    self.parser.getArg1(), self.parser.getArg2())
                 self.parser.advance()
             elif (_type == "Arithmetic"):
                 self.codeWriter.writeArithmetic(self.parser.getArg1())
                 self.parser.advance()
-            elif(tipo == "Label"):
+            elif(_type == "Label"):
                 codeWriter.writeLabel(parser.getArg1())
                 parser.advance()
-            elif (tipo == "Goto"):
+            elif (_type == "Goto"):
                 codeWriter.writeGoto(parser.getArg1())
                 parser.advance()
-            elif (tipo == "If"):
+            elif (_type == "If"):
                 codeWriter.writeIf(parser.getArg1())
                 parser.advance()
 
-            elif (tipo == "Call"):
+            elif (_type == "Call"):
                 codeWriter.writeCall(parser.getArg1(), parser.getArg2())
                 parser.advance()
-            elif (tipo == "Return"):
+            elif (_type == "Return"):
                 codeWriter.writeReturn()
                 parser.advance()
-            elif (tipo == "Function"):
+            elif (_type == "Function"):
                 codeWriter.writeFunction(parser.getArg1(), parser.getArg2())
                 parser.advance()
             else:
@@ -50,5 +53,3 @@ parser = Parser('teste.vm')
 codeWriter = CodeWriter(outputFile+".asm")
 translate = Translate(parser, codeWriter)
 translate.translate()
-
-
