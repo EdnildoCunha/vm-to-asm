@@ -1,5 +1,5 @@
-from parser import Parser
-from codeWriter import CodeWriter
+from analyzer import Parser
+from codeW import CodeWriter
 
 
 class Translate:
@@ -48,8 +48,8 @@ class Translate:
                 self.parser.advance()
 
 
-outputFile = "VMTeste"
-parser = Parser('teste.vm')
+outputFile = "07\MemoryAccess\BasicTest\BASICTEST"
+parser = Parser('07\MemoryAccess\BasicTest\BasicTest.vm')
 codeWriter = CodeWriter(outputFile+".asm")
 translate = Translate(parser, codeWriter)
 translate.translate()
