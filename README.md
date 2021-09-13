@@ -16,11 +16,11 @@
 
 ## Status do Projeto:
 - [x] Parte 1
-- [ ] Parte 2 
+- [x] Parte 2 
 
 
-## Rodando o teste para o analisador sintático
-<p align="justify"> Deseja-se saber se a parte 1 do projeto do tradutor está gerando corretamente o arquivo ASM. </p>
+## Rodando o teste
+<p align="justify"> Deseja-se saber se a parte 2 do projeto do tradutor está gerando corretamente o arquivo ASM. </p>
 
 # Clone este repositório:
 ```bash

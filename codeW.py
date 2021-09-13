@@ -1,6 +1,6 @@
 class CodeWriter:
 
-    def __init__ (self, outputFileName):
+    def __init__(self, outputFileName):
         self.output = open(outputFileName, "w")
         self.moduleName = outputFileName.split(".")[0]
         self.counter1 = 0
@@ -9,15 +9,20 @@ class CodeWriter:
         self.counter4 = 0
 
     def getSegmentPointer(self, segment, index):
-        if(segment == "local"): return "LCL"
-        elif(segment == "argument") : return "ARG"
-        elif(segment in ["this", "that"]) : return segment.upper()
-        elif(segment == "temp") : return "R{}".format(5+int(index))
-        elif(segment == "pointer") : return "R{}".format(3+int(index))
-        elif(segment == "static") : return "{}.{}".format(self.moduleName, index)
+        if(segment == "local"):
+            return "LCL"
+        elif(segment == "argument"):
+            return "ARG"
+        elif(segment in ["this", "that"]):
+            return segment.upper()
+        elif(segment == "temp"):
+            return "R{}".format(5+int(index))
+        elif(segment == "pointer"):
+            return "R{}".format(3+int(index))
+        elif(segment == "static"):
+            return "{}.{}".format(self.moduleName, index)
         else:
             return 'ERROR'
-
 
     def write(self, text):
         print("{}".format(text), file=self.output)
@@ -40,24 +45,24 @@ class CodeWriter:
         self.write("M=D")
         self.writeCall("Sys.init", 0)
 
-    def writeArithmetic (self, command):
+    def writeArithmetic(self, command):
 
         if(command == "add"):
             self.writeBinary()
-            self.write("M=D+M") # add
+            self.write("M=D+M")  # add
         elif(command == "sub"):
             self.writeBinary()
-            self.write("M=M-D") #sub
+            self.write("M=M-D")  # sub
         elif (command == "and"):
             self.writeBinary()
             self.write("M=D&M")  # sub
         elif (command == "or"):
             self.writeBinary()
-            self.write("M=D|M")  #sub # or
+            self.write("M=D|M")  # sub # or
 
         elif(command == "neg"):
             self.writeUnary()
-            self.write("M=-M") #neg
+            self.write("M=-M")  # neg
         elif (command == "not"):
             self.writeUnary()
             self.write("M=!M")  # neg
@@ -81,7 +86,7 @@ class CodeWriter:
             self.write("A=M-1")
             self.write("M=-1")
             self.write("(GTSTACK{})".format(self.counter1))
-            self.counter1 +=1
+            self.counter1 += 1
 
         elif (command == "eq"):
             self.write("@SP")
@@ -103,7 +108,6 @@ class CodeWriter:
             self.write("M=-1")
             self.write("(EQSTACK{})".format(self.counter2))
             self.counter2 += 1
-
 
         elif (command == "lt"):
             self.write("@SP")
@@ -140,7 +144,8 @@ class CodeWriter:
             self.write("@SP")
             self.write("M=M+1")
         elif (segment in ["local", "argument", "this", "that"]):
-            self.write("@{} // push {} {}".format(self.getSegmentPointer(segment, index), segment, index))
+            self.write(
+                "@{} // push {} {}".format(self.getSegmentPointer(segment, index), segment, index))
             self.write("D=M")
             self.write("@{}".format(index))
             self.write("A=D+A")
@@ -153,13 +158,14 @@ class CodeWriter:
 
         elif(segment in ["temp", "pointer", "static"]):
 
-                self.write("@{} // push {}  {}".format(self.getSegmentPointer(segment, index), segment, index))
-                self.write("D=M")
-                self.write("@SP")
-                self.write("A=M")
-                self.write("M=D")
-                self.write("@SP")
-                self.write("M=M+1")
+            self.write(
+                "@{} // push {}  {}".format(self.getSegmentPointer(segment, index), segment, index))
+            self.write("D=M")
+            self.write("@SP")
+            self.write("A=M")
+            self.write("M=D")
+            self.write("@SP")
+            self.write("M=M+1")
 
     def writePop(self, segment, index):
         if (segment in ["static", "temp", "pointer"]):
@@ -170,7 +176,8 @@ class CodeWriter:
             self.write("@{}".format(self.getSegmentPointer(segment, index)))
             self.write("M=D")
         elif(segment in ["local", "argument", "this", "that"]):
-            self.write("@{} // pop {} {}".format(self.getSegmentPointer(segment, index), segment, index))
+            self.write(
+                "@{} // pop {} {}".format(self.getSegmentPointer(segment, index), segment, index))
             self.write("D=M")
 
             self.write("@{}".format(index))
@@ -184,7 +191,6 @@ class CodeWriter:
             self.write("@R13")
             self.write("A=M")
             self.write("M=D")
-
 
     def writeLabel(self, name):
         self.write("({})".format(name))
@@ -271,7 +277,6 @@ class CodeWriter:
 
         self.write("({})".format(returnAddres))
 
-
     def writeReturn(self):
         self.write("@LCL")
         self.write("D=M")
@@ -323,7 +328,6 @@ class CodeWriter:
         self.write("@R14")
         self.write("A=M")
         self.write("0;JMP")
-
 
     def close(self):
         self.output.close()
