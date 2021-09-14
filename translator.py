@@ -48,8 +48,8 @@ class Translate:
                 self.parser.advance()
 
 
-outputFile = "08\FunctionCalls\NestedCall\Sys"
-parser = Parser('08\FunctionCalls\NestedCall\Sys.vm')
+outputFile = "08\FunctionCalls\FibonacciElement\FibonacciElement"
+parser = Parser('08\FunctionCalls\FibonacciElement\Sys.vm')
 codeWriter = CodeWriter(outputFile+".asm")
 translate = Translate(parser, codeWriter)
 translate.translate()
