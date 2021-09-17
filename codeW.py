@@ -2,7 +2,7 @@ class CodeWriter:
 
     def __init__(self, outputFileName):
         self.output = open(outputFileName, "w")
-        self.moduleName = outputFileName.split(".")[0]
+        self.moduleName = "Bar"  # outputFileName.split(".")[0]
         self.counter1 = 0
         self.counter2 = 0
         self.counter3 = 0
